@@ -1,3 +1,13 @@
+    * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* ← clave para evitar scroll lateral */
+}
     :root {
         --bg-color: #ffffff;
         --text-color: #222222;
@@ -15,6 +25,7 @@
     }
 
     body {
+        overflow-x: hidden; /* ← evita el scroll lateral */
         font-family: 'Segoe UI', sans-serif;
         background-color: var(--bg-color);
         color: var(--text-color);
@@ -58,25 +69,23 @@
     }
 
    .search-container {
-    flex: 1;
-    max-width: 500px;
-    width: 100%; /* Agregado */
-    display: flex;
-    justify-content: center;
-    padding: 10px 16px;
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-container input {
-    width: 100%;
-    max-width: 100%; /* Asegura que no exceda en móvil */
-    padding: 10px 15px;
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    font-size: 1rem;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    box-sizing: border-box; /* Previene desbordes */
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color, #444);
+  background-color: var(--bg-color, #1e1e1e);
+  color: var(--text-color, #fff);
+  box-sizing: border-box;
 }
 
 
@@ -150,4 +159,15 @@
         height: 180px;
         border: none;
     }
+
+    @media (max-width: 768px) {
+  .search-container {
+    padding: 1rem;
+  }
+
+  .search-container input {
+    font-size: 1rem;
+  }
+}
+
 

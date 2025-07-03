@@ -87,7 +87,7 @@ const data = [
         "verificado_por": "Nexel",
         "jugador_record": "Perrix47",
         "top_demonlist": "#42",
-        "videoId": "OZM8j4fmDGc"
+        "videoId": "CnjcKBEZRBo"
     }
 ];
 
