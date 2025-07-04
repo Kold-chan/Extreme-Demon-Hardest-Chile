@@ -43,51 +43,6 @@ const data = [
         "jugador_record": "Perrix47",
         "top_demonlist": "#25",
         "videoId": "ywW9KrTH7kc"
-    },
-    {
-        "posicion": 6,
-        "nombre": "Belladona",
-        "creado_por": "cherryteam",
-        "verificado_por": "exsii",
-        "jugador_record": "manu",
-        "top_demonlist": "#28",
-        "videoId": "vJuflWhrDn4"
-    },
-    {
-        "posicion": 7,
-        "nombre": "Solar Flare",
-        "creado_por": "Linear",
-        "verificado_por": "swiborg",
-        "jugador_record": "Perrix47",
-        "top_demonlist": "#31",
-        "videoId": "jidCmLHzBEM"
-    },
-    {
-        "posicion": 8,
-        "nombre": "LIMBO",
-        "creado_por": "MindCap",
-        "verificado_por": "BUNNYGRAM",
-        "jugador_record": "manu",
-        "top_demonlist": "#32",
-        "videoId": "BCAoGUlQDEc"
-    },
-    {
-        "posicion": 9,
-        "nombre": "The Yangire",
-        "creado_por": "Dorami",
-        "verificado_por": "Dorami",
-        "jugador_record": "manu - Paltadash - Perrix47 - Chiloé",
-        "top_demonlist": "#40",
-        "videoId": "CnjcKBEZRBo"
-    },
-    {
-        "posicion": 10,
-        "nombre": "Collapse",
-        "creado_por": "Nexel",
-        "verificado_por": "Nexel",
-        "jugador_record": "Perrix47",
-        "top_demonlist": "#42",
-        "videoId": "OZM8j4fmDGc"
     }
 ];
 
@@ -108,6 +63,7 @@ function renderList(items) {
             <p><span>✅</span> <strong>Verificado por:</strong> ${item.verificado_por}</p>
             <p><span>🏆</span> <strong>Jugador récord:</strong> ${item.jugador_record}</p>
             <p><span>🔎</span> <strong>Top en Demonlist:</strong> ${item.top_demonlist}</p>
+            <button class="btn-open-comments" style="margin-top: 10px; padding: 8px 12px; border: none; border-radius: 6px; background-color: var(--button-bg); color: white; cursor: pointer;">Ver comentarios</button>
         `;
 
         const right = document.createElement('div');
@@ -123,6 +79,10 @@ function renderList(items) {
         card.appendChild(left);
         card.appendChild(right);
         container.appendChild(card);
+
+        left.querySelector('.btn-open-comments').addEventListener('click', () => {
+          openDetails(item);
+        });
     });
 }
 
@@ -139,15 +99,131 @@ searchInput.addEventListener('input', () => {
     renderList(filtered);
 });
 
+const detailsSection = document.getElementById('details-comments');
+const closeDetailsBtn = document.getElementById('close-details');
+const detailsTitle = document.getElementById('details-title');
+const detailsCreador = document.getElementById('details-creador');
+const detailsVerificador = document.getElementById('details-verificador');
+const detailsJugador = document.getElementById('details-jugador');
+const detailsTop = document.getElementById('details-top');
+const detailsIframe = document.getElementById('details-iframe');
+const commentsList = document.getElementById('comments-list');
+const commentForm = document.getElementById('comment-form');
+const commentInput = document.getElementById('comment-input');
+
+let currentLevel = null;
+
+function openDetails(level) {
+  currentLevel = level;
+  detailsTitle.textContent = `#${level.posicion} - ${level.nombre}`;
+  detailsCreador.textContent = level.creado_por;
+  detailsVerificador.textContent = level.verificado_por;
+  detailsJugador.textContent = level.jugador_record;
+  detailsTop.textContent = level.top_demonlist;
+  detailsIframe.src = `https://www.youtube.com/embed/${level.videoId}?rel=0`;
+
+  loadComments(level.posicion);
+  detailsSection.style.display = 'flex';  // mostrar modal y usar flex para centrar
+
+  document.body.classList.add('modal-open'); // bloquear scroll body
+}
+
+closeDetailsBtn.addEventListener('click', () => {
+  detailsSection.style.display = 'none';
+  detailsIframe.src = '';
+  currentLevel = null;
+  document.body.classList.remove('modal-open'); // restaurar scroll
+});
+
+
+function scrollToCenter(element) {
+  const elementRect = element.getBoundingClientRect();
+  const absoluteElementTop = window.pageYOffset + elementRect.top;
+  const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 2);
+  window.scrollTo({ top: middle, behavior: 'smooth' });
+}
+
+closeDetailsBtn.addEventListener('click', () => {
+  detailsSection.style.display = 'none';
+  detailsIframe.src = '';
+  currentLevel = null;
+});
+
+const DEV_KOLD = "Dev Kold";
+
+function loadComments(levelPos) {
+  commentsList.innerHTML = '';
+  let comments = JSON.parse(localStorage.getItem('comments_' + levelPos)) || [];
+  comments.forEach((comment, idx) => {
+    addCommentToDOM(comment, idx);
+  });
+}
+
+function addCommentToDOM(comment, idx) {
+  const li = document.createElement('li');
+  li.dataset.idx = idx;
+
+  const authorSpan = document.createElement('span');
+  authorSpan.className = 'author';
+  authorSpan.textContent = comment.author + ': ';
+
+  const textSpan = document.createElement('span');
+  textSpan.textContent = comment.text;
+
+  li.appendChild(authorSpan);
+  li.appendChild(textSpan);
+
+  if(comment.author === DEV_KOLD) {
+    const delBtn = document.createElement('span');
+    delBtn.textContent = '✖';
+    delBtn.className = 'delete-btn';
+    delBtn.title = 'Borrar comentario';
+    delBtn.style.cursor = 'pointer';
+    delBtn.addEventListener('click', () => {
+      deleteComment(idx);
+    });
+    li.appendChild(delBtn);
+  }
+
+  commentsList.appendChild(li);
+}
+
+function deleteComment(idx) {
+  if (!currentLevel) return;
+  let comments = JSON.parse(localStorage.getItem('comments_' + currentLevel.posicion)) || [];
+  comments.splice(idx, 1);
+  localStorage.setItem('comments_' + currentLevel.posicion, JSON.stringify(comments));
+  loadComments(currentLevel.posicion);
+}
+
+commentForm.addEventListener('submit', e => {
+  e.preventDefault();
+  if (!currentLevel) return;
+
+  const newComment = {
+    author: DEV_KOLD,
+    text: commentInput.value.trim()
+  };
+
+  if (newComment.text.length === 0) return;
+
+  let comments = JSON.parse(localStorage.getItem('comments_' + currentLevel.posicion)) || [];
+  comments.push(newComment);
+  localStorage.setItem('comments_' + currentLevel.posicion, JSON.stringify(comments));
+  
+  commentInput.value = '';
+  loadComments(currentLevel.posicion);
+});
+
 const toggleButton = document.getElementById('toggle-mode');
 toggleButton.addEventListener('click', () => {
     document.body.classList.toggle('dark');
-    toggleButton.textContent = document.body.classList.contains('dark') ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+    toggleButton.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
 });
 
 const hamburger = document.getElementById('hamburger');
 const searchContainer = document.getElementById('search-container');
 
-hamburger.addEventListener('click', () => {
+hamburger?.addEventListener('click', () => {
     searchContainer.classList.toggle('active');
 });
