@@ -163,6 +163,28 @@ h1 {
   width: 320px;
   height: 180px;
   border: none;
+  max-width: 100%; /* <-- para que no se pase del contenedor */
+  aspect-ratio: 16 / 9; /* <-- mantiene proporción */
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    align-items: center; /* centra contenido horizontalmente */
+  }
+  .card-video {
+    width: 100%;
+    max-width: 100%;
+  }
+  .card-video iframe {
+    width: 100%;
+    height: auto; /* altura automática según aspecto */
+  }
+  .card-content {
+    flex: none;
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
