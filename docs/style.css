@@ -11,7 +11,7 @@ html, body {
     :root {
         --bg-color: #ffffff;
         --text-color: #222222;
-        --card-bg: #f9f9f9;
+        --card-bg: #ececec;
         --button-bg: #d32f2f;
         --button-hover: #b71c1c;
         --border-color: #ddd;
@@ -169,5 +169,26 @@ html, body {
     font-size: 1rem;
   }
 }
+.footer {
+    margin-top: 4rem;
+    padding: 1.5rem 0;
+    background-color: #000000;
+    text-align: center;
+}
+
+.instagram-icon {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.instagram-icon:hover {
+    transform: scale(1.15);
+}
+
+
+
+
 
 

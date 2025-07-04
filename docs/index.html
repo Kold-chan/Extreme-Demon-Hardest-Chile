@@ -1,42 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Extreme Hardest Chile</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Extreme Hardest Chile</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- 🎨 Estilo para el video de fondo -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.4) saturate(1.8);
+      pointer-events: none;
+    }
+
+    header, main, footer, .search-container {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
 </head>
+
 <body>
-    <header class="top-bar">
-        <div class="top-bar-container">
-            <!-- Logo y título -->
-            <div class="logo-section">
-                <img src="imagenes/logo.png" alt="Logo" class="logo">
-                <div style="margin-left: 1cm;">
-                    <h1>Extreme Hardest Chile</h1>
-                </div>
-                
-            </div>
+  <!-- 🎥 VIDEO DE FONDO -->
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="videos/nhelv.mp4" type="video/mp4" />
+    Tu navegador no soporta el video HTML5.
+  </video>
 
-          
-            <!-- Botón de modo oscuro -->
-            <div style="margin-right: 2cm;" class="actions">
-                <button id="toggle-mode">🌙</button>
-            </div>
+  <!-- ✅ TU CONTENIDO -->
+  <header class="top-bar">
+    <div class="top-bar-container">
+      <div class="logo-section">
+        <img src="imagenes/logo.png" alt="Logo" class="logo">
+        <div style="margin-left: 1cm;">
+          <h1>Extreme Hardest Chile</h1>
         </div>
-    </header>
-  <!-- Buscador -->
-            <div class="search-container">
-  <input type="text" id="search" placeholder="🔍 Buscar por nombre, creador o jugador...">
-</div>
+      </div>
 
-    <main>
-        <!-- Contenedor de la lista de niveles -->
-        <section id="list" class="list-container"></section>
-    </main>
+      <div style="margin-right: 2cm;" class="actions">
+        <button id="toggle-mode">🌙</button>
+      </div>
+    </div>
+  </header>
 
-    <!-- Script principal -->
-    <script src="main.js"></script>
+  <div class="search-container">
+    <input type="text" id="search" placeholder="🔍 Buscar por nombre, creador o jugador...">
+  </div>
+
+  <main>
+    <section id="list" class="list-container"></section>
+  </main>
+
+  <script src="main.js"></script>
+
+  <footer style="text-align:center; padding:20px; background:#222;">
+    <!-- Tus íconos (Instagram, Discord, YouTube, Gmail) -->
+  </footer>
 </body>
-
 </html>
+
