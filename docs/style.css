@@ -120,7 +120,16 @@ html, body {
         gap: 20px;
         padding: 0 20px;
     }
+    .card {
+  overflow: hidden;
+}
 
+.card-video iframe {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
     .card {
         display: flex;
         flex-wrap: wrap;
@@ -186,6 +195,7 @@ html, body {
 .instagram-icon:hover {
     transform: scale(1.15);
 }
+
 
 
 
