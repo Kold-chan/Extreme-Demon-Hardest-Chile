@@ -149,7 +149,7 @@ closeDetailsBtn.addEventListener('click', () => {
   currentLevel = null;
 });
 
-const DEV_KOLD = "Dev Kold";
+const INVITADO = "Invitado";
 
 function loadComments(levelPos) {
   commentsList.innerHTML = '';
