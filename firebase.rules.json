@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "comentarios": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "usuarios": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}
